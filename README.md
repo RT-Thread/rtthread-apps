@@ -96,3 +96,8 @@ application can use the most of APIs of RT-Thread, for example:
     }
 
 This example will create a sub-thread, which named as 'tMyTask'. 
+
+## License ##
+
+All of user application are standalone program, if there is no special explanation, 
+the license of these program is [GPLv2](LICENSE). While the license of RT-Thread RTOS is GPLv2+. 
