@@ -59,10 +59,26 @@ def BuildEnv(BSP_ROOT, RTT_ROOT):
     Rtt_Root = RTT_ROOT
     BSP_Root = BSP_ROOT
 
+def BuildHostApplication(TARGET, SConscriptFile):
+    sys.path = sys.path + [os.path.join(os.getcwd(), 'tools', 'host')]
+
+    from building import PrepareHostModuleBuilding
+
+    Env = Environment()
+    PrepareHostModuleBuilding(Env)
+    objs = SConscript(SConscriptFile)
+    target = Env.Program(TARGET, objs)
+    return
+
 def BuildApplication(TARGET, SConscriptFile, BSP_ROOT = None, RTT_ROOT = None):
     global Env
     global Rtt_Root
     global BSP_Root
+
+    # build application in host 
+    if BSP_ROOT == None and RTT_ROOT == None and not os.getenv('BSP_ROOT'):
+        BuildHostApplication(TARGET, SConscriptFile)
+        return
 
     # handle BSP_ROOT and RTT_ROOT
     BuildEnv(BSP_ROOT, RTT_ROOT)
@@ -93,7 +109,7 @@ def BuildApplication(TARGET, SConscriptFile, BSP_ROOT = None, RTT_ROOT = None):
             LINK = rtconfig.LINK, LINKFLAGS = linkflags,
             CPPPATH = CPPPATH)
 
-    PrepareModuleBuilding(Env, Rtt_Root)
+    PrepareModuleBuilding(Env, Rtt_Root, BSP_Root)
 
     objs = SConscript(SConscriptFile)
 
