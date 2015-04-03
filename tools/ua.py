@@ -93,7 +93,7 @@ def BuildApplication(TARGET, SConscriptFile, BSP_ROOT = None, RTT_ROOT = None):
             LINK = rtconfig.LINK, LINKFLAGS = linkflags,
             CPPPATH = CPPPATH)
 
-    PrepareModuleBuilding(Env, Rtt_Root)
+    PrepareModuleBuilding(Env, Rtt_Root, BSP_Root)
 
     objs = SConscript(SConscriptFile)
 
