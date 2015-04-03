@@ -8,8 +8,9 @@
 
 void usage(void)
 {
-    printf("md5 -g filename : to generate md5 file (The file name is filename.md5).\n");
-    printf("md5 -c filename : to compare md5.\n");
+    printf("The md5 value generation/comparision tool.\n");
+    printf("md5 -g filename : to generate md5 file.\n");
+    printf("md5 -c filename : to compare md5 value.\n");
 
     return;
 }

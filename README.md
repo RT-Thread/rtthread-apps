@@ -97,6 +97,13 @@ application can use the most of APIs of RT-Thread, for example:
 
 This example will create a sub-thread, which named as 'tMyTask'. 
 
+## Build the POSIX application in the host ##
+
+If you didn't set RTT_ROOT/BSP_ROOT, The command ```scons --app=hello``` will 
+build the program in host environment, for example, build it as a Linux program. 
+
+Therefore, only POSIX application can be built like that. 
+
 ## License ##
 
 All of user application are standalone program, if there is no special explanation, 
