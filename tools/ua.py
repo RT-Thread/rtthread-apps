@@ -88,6 +88,7 @@ def BuildApplication(TARGET, SConscriptFile, BSP_ROOT = None, RTT_ROOT = None):
     # get configuration from BSP 
     import rtconfig 
     from rtua import GetCPPPATH
+    from rtua import GetCPPDEFINES
     from building import PrepareModuleBuilding
 
     linkflags = rtconfig.M_LFLAGS + ' -e main'
@@ -99,12 +100,13 @@ def BuildApplication(TARGET, SConscriptFile, BSP_ROOT = None, RTT_ROOT = None):
         Env.Append(LINKFLAGS=rtconfig.M_LFLAGS)
         Env.Append(CPPPATH=CPPPATH)
         Env.Append(LIBS='rtthread', LIBPATH=BSP_Root)
-        Env.Append(CPPDEFINES=['RTT_IN_MODULE'])
+        Env.Append(CPPDEFINES=GetCPPDEFINES() + ['RTT_IN_MODULE'])
         Env.PrependENVPath('PATH', rtconfig.EXEC_PATH)
     else:
         Env = Environment(tools = ['mingw'],
             AS = rtconfig.AS, ASFLAGS = rtconfig.AFLAGS,
             CC = rtconfig.CC, CCFLAGS = rtconfig.M_CFLAGS,
+            CPPDEFINES = GetCPPDEFINES(),
             CXX = rtconfig.CXX, AR = rtconfig.AR, ARFLAGS = '-rc',
             LINK = rtconfig.LINK, LINKFLAGS = linkflags,
             CPPPATH = CPPPATH)
