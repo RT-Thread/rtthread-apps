@@ -14,16 +14,17 @@ struct custom_ctx
 
 static enum rym_code _rym_bg(
     struct rym_ctx *ctx,
-    rt_uint8_t *buf,
+    rt_uint8_t *pbuf,
     rt_size_t len)
 {
+    char *buf = (char*)pbuf;
     struct custom_ctx *cctx = (struct custom_ctx *)ctx;
     cctx->fpath[0] = '\0';
 
     /* use current working directory */
     getcwd(cctx->fpath, sizeof(cctx->fpath));
     strcat(cctx->fpath, "/");
-    strcat(cctx->fpath, buf);
+    strcat(cctx->fpath, (char*)buf);
 
     cctx->fd = open(cctx->fpath, O_CREAT | O_WRONLY | O_TRUNC, 0);
     if (cctx->fd < 0)
