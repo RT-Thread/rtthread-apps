@@ -22,6 +22,8 @@
 # 2015-02-07     Bernard      The firstly version
 #
 
+import os
+
 from tools.ua import BuildApplication
 
 AddOption('--app',
@@ -33,4 +35,9 @@ AddOption('--app',
 
 app = GetOption('app')
 
-BuildApplication(app + '/' + app + '.mo', app +'/SConscript')
+if app == None:
+  print("none application, please use 'scons --app=your_app'")
+  exit(0)
+
+else:
+  BuildApplication(app + '/' + app + '.mo', app +'/SConscript')

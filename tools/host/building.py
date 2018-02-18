@@ -44,8 +44,60 @@ def PrepareHostModuleBuilding(env):
     Env = env;
 
 def GetDepend(depend):
+    # always true
     return True
-    
+
+def MergeGroup(src_group, group):
+    src_group['src'] = src_group['src'] + group['src']
+    if group.has_key('CCFLAGS'):
+        if src_group.has_key('CCFLAGS'):
+            src_group['CCFLAGS'] = src_group['CCFLAGS'] + group['CCFLAGS']
+        else:
+            src_group['CCFLAGS'] = group['CCFLAGS']
+    if group.has_key('CPPPATH'):
+        if src_group.has_key('CPPPATH'):
+            src_group['CPPPATH'] = src_group['CPPPATH'] + group['CPPPATH']
+        else:
+            src_group['CPPPATH'] = group['CPPPATH']
+    if group.has_key('CPPDEFINES'):
+        if src_group.has_key('CPPDEFINES'):
+            src_group['CPPDEFINES'] = src_group['CPPDEFINES'] + group['CPPDEFINES']
+        else:
+            src_group['CPPDEFINES'] = group['CPPDEFINES']
+
+    # for local CCFLAGS/CPPPATH/CPPDEFINES
+    if group.has_key('LOCAL_CCFLAGS'):
+        if src_group.has_key('LOCAL_CCFLAGS'):
+            src_group['LOCAL_CCFLAGS'] = src_group['LOCAL_CCFLAGS'] + group['LOCAL_CCFLAGS']
+        else:
+            src_group['LOCAL_CCFLAGS'] = group['LOCAL_CCFLAGS']
+    if group.has_key('LOCAL_CPPPATH'):
+        if src_group.has_key('LOCAL_CPPPATH'):
+            src_group['LOCAL_CPPPATH'] = src_group['LOCAL_CPPPATH'] + group['LOCAL_CPPPATH']
+        else:
+            src_group['LOCAL_CPPPATH'] = group['LOCAL_CPPPATH']
+    if group.has_key('LOCAL_CPPDEFINES'):
+        if src_group.has_key('LOCAL_CPPDEFINES'):
+            src_group['LOCAL_CPPDEFINES'] = src_group['LOCAL_CPPDEFINES'] + group['LOCAL_CPPDEFINES']
+        else:
+            src_group['LOCAL_CPPDEFINES'] = group['LOCAL_CPPDEFINES']
+
+    if group.has_key('LINKFLAGS'):
+        if src_group.has_key('LINKFLAGS'):
+            src_group['LINKFLAGS'] = src_group['LINKFLAGS'] + group['LINKFLAGS']
+        else:
+            src_group['LINKFLAGS'] = group['LINKFLAGS']
+    if group.has_key('LIBS'):
+        if src_group.has_key('LIBS'):
+            src_group['LIBS'] = src_group['LIBS'] + group['LIBS']
+        else:
+            src_group['LIBS'] = group['LIBS']
+    if group.has_key('LIBPATH'):
+        if src_group.has_key('LIBPATH'):
+            src_group['LIBPATH'] = src_group['LIBPATH'] + group['LIBPATH']
+        else:
+            src_group['LIBPATH'] = group['LIBPATH']
+
 def DefineGroup(name, src, depend, **parameters):
     global Env
     if not GetDepend(depend):

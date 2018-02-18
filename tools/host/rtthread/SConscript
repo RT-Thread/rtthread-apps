@@ -1,0 +1,11 @@
+from building import *
+
+src = Glob('*.c') + Glob('*.cpp')
+cwd = GetCurrentDir()
+
+CPPPATH    = [cwd]
+CPPDEFINES = ['HOST_BUILD']
+
+group = DefineGroup('RT-Thread', src, depend = [''], CPPPATH=CPPPATH, CPPDEFINES = CPPDEFINES)
+
+Return('group')

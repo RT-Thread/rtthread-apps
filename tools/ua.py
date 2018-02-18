@@ -64,9 +64,25 @@ def BuildHostApplication(TARGET, SConscriptFile):
 
     from building import PrepareHostModuleBuilding
 
+    HostRtt = os.path.join(os.getcwd(), 'tools', 'host', 'rtthread')
     Env = Environment()
+
+    if not GetOption('verbose'):
+        # override the default verbose command string
+        Env.Replace(
+            ARCOMSTR = 'AR $TARGET',
+            ASCOMSTR = 'AS $TARGET',
+            ASPPCOMSTR = 'AS $TARGET',
+            CCCOMSTR = 'CC $TARGET',
+            CXXCOMSTR = 'CXX $TARGET',
+            LINKCOMSTR = 'LINK $TARGET'
+        )
+
     PrepareHostModuleBuilding(Env)
+
     objs = SConscript(SConscriptFile)
+    objs += SConscript(HostRtt + '/SConscript')
+
     target = Env.Program(TARGET, objs)
     return
 
@@ -74,6 +90,13 @@ def BuildApplication(TARGET, SConscriptFile, BSP_ROOT = None, RTT_ROOT = None):
     global Env
     global Rtt_Root
     global BSP_Root
+
+    # add comstr option
+    AddOption('--verbose',
+                dest='verbose',
+                action='store_true',
+                default=False,
+                help='print verbose information during build')
 
     # build application in host 
     if BSP_ROOT == None and RTT_ROOT == None and not os.getenv('BSP_ROOT'):
@@ -110,6 +133,17 @@ def BuildApplication(TARGET, SConscriptFile, BSP_ROOT = None, RTT_ROOT = None):
             CXX = rtconfig.CXX, AR = rtconfig.AR, ARFLAGS = '-rc',
             LINK = rtconfig.LINK, LINKFLAGS = linkflags,
             CPPPATH = CPPPATH)
+
+    if not GetOption('verbose'):
+        # override the default verbose command string
+        Env.Replace(
+            ARCOMSTR = 'AR $TARGET',
+            ASCOMSTR = 'AS $TARGET',
+            ASPPCOMSTR = 'AS $TARGET',
+            CCCOMSTR = 'CC $TARGET',
+            CXXCOMSTR = 'CXX $TARGET',
+            LINKCOMSTR = 'LINK $TARGET'
+        )
 
     PrepareModuleBuilding(Env, Rtt_Root, BSP_Root)
 
