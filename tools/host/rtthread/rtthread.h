@@ -11,6 +11,7 @@
 extern "C" {
 #endif
 
+#define RT_USING_DFS
 #define RT_USING_DEVICE
 #define RT_TICK_PER_SECOND  100
 #define RT_CONSOLEBUF_SIZE  256
