@@ -60,6 +60,12 @@ def BuildEnv(BSP_ROOT, RTT_ROOT):
     BSP_Root = BSP_ROOT
 
 def BuildHostApplication(TARGET, SConscriptFile):
+    import platform
+
+    platform_type = platform.system()
+    if platform_type == 'Windows' or platform_type.find('MINGW') != -1:
+        TARGET = TARGET.replace('.mo', '.exe')
+
     sys.path = sys.path + [os.path.join(os.getcwd(), 'tools', 'host')]
 
     from building import PrepareHostModuleBuilding
