@@ -33,11 +33,11 @@ directory.
 
 Windows:
 
-    set BSP_ROOT=`your_bsp_directory`
+    set BSP_ROOT=your_bsp_directory
 
 Linux:
 
-    export BSP_ROOT=`your_bsp_directory`
+    export BSP_ROOT=your_bsp_directory
 
 And to run the command under your BSP directory:
 
