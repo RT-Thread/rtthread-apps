@@ -109,6 +109,9 @@ def BuildApplication(TARGET, SConscriptFile, BSP_ROOT = None, RTT_ROOT = None):
         BuildHostApplication(TARGET, SConscriptFile)
         return
 
+    if RTT_ROOT == None and os.getenv('RTT_ROOT'):
+        RTT_ROOT = os.getenv('RTT_ROOT')
+
     # handle BSP_ROOT and RTT_ROOT
     BuildEnv(BSP_ROOT, RTT_ROOT)
 
@@ -166,7 +169,7 @@ def BuildApplication(TARGET, SConscriptFile, BSP_ROOT = None, RTT_ROOT = None):
         target = Env.Program(TARGET, objs)
 
     if hasattr(rtconfig, 'M_POST_ACTION'):
-        Env.AddPostAction(target, rtconfig.POST_ACTION)
+        Env.AddPostAction(target, rtconfig.M_POST_ACTION)
 
     if hasattr(rtconfig, 'M_BIN_PATH'):
         Env.AddPostAction(target, [Copy(rtconfig.M_BIN_PATH, TARGET)])
