@@ -3,6 +3,8 @@
 *.ko
 *.obj
 *.elf
+*.mo
+*.pyc
 
 # Precompiled Headers
 *.gch
@@ -27,3 +29,6 @@
 *.i*86
 *.x86_64
 *.hex
+
+.sconsign.dblite
+
