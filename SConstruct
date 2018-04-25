@@ -20,17 +20,40 @@
 # Change Logs:
 # Date           Author       Notes
 # 2015-02-07     Bernard      The firstly version
+# 2018-04-15     Bernard      Add the build option for library
 #
 
+import os
+
 from tools.ua import BuildApplication
+from tools.ua import BuildLibrary
 
 AddOption('--app',
   dest='app',
   nargs=1, type='string',
   action='store',
   metavar='DIR',
-  help='applications to be built')
+  help='application to be built')
+
+AddOption('--lib',
+  dest='lib',
+  nargs=1, type='string',
+  action='store',
+  metavar='DIR',
+  help='library to be built')
 
 app = GetOption('app')
+lib = GetOption('lib')
 
-BuildApplication(app + '/' + app + '.mo', app +'/SConscript')
+if app == None and lib == None:
+  print("none application or library, please use ")
+  print("    scons --app=your_app")
+  print("    scons --lib=your_lib")
+  exit(0)
+
+else:
+  if app:
+    BuildApplication(app + '/' + app + '.mo', app +'/SConscript')
+
+  if lib:
+    BuildLibrary(lib + '/' + lib + '.so', lib +'/SConscript')
