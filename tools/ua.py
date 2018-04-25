@@ -286,6 +286,3 @@ def BuildLibrary(TARGET, SConscriptFile, BSP_ROOT = None, RTT_ROOT = None):
 
     if hasattr(rtconfig, 'M_POST_ACTION'):
         Env.AddPostAction(target, rtconfig.M_POST_ACTION)
-
-    if hasattr(rtconfig, 'M_BIN_PATH'):
-        Env.AddPostAction(target, [Copy(rtconfig.M_BIN_PATH, TARGET)])
