@@ -1,0 +1,13 @@
+import rtconfig
+from building import *
+
+src = Glob('*.c') + Glob('*.cpp')
+cwd = GetCurrentDir()
+CPPPATH = [cwd]
+
+if rtconfig.CPU == 'win32':
+    group = []
+else:
+    group = DefineGroup('C++ Run time', src, depend = [''], CPPPATH=CPPPATH)
+
+Return('group')
